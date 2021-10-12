@@ -1,7 +1,10 @@
+// Written by Dylan Hansen and Emily Roberts
+
 #include "element.h"
 #include "list.h"
-#include <iostream>
+#include <iostream> // For outputting to the console
 
+// TESTING FOR NOW UNTIL A PROPER UNIT TESTING CLASS IS IMPLEMENETED
 int main()
 {
         core::list main_list("Jojo");
