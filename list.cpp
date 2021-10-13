@@ -52,6 +52,11 @@ void core::list::insert(const element &e)
 
 }
 
+void core::list::remove(const element &e)
+{
+    
+}
+
 std::vector<core::element*> core::list::get_elements() const
 {
     return elements;

@@ -22,7 +22,10 @@ namespace core
         public:
             list(const std::string &name); // Creates a list with the given name
             list(const std::string &name, const std::vector<element*> &init_elements); // Creates a list with the given name and elements already in it
+
             void insert(const element &e); // Inserts an element into the list
+            void remove(const element &e); // Removes the specified element from the list
+
             std::vector<element*> get_elements() const; // Gets the list of elements in the default ordering
             std::vector<element*> get_sorted(const std::string &type) const; // Gets the sorted list of elements sorted with the specified type
     };
