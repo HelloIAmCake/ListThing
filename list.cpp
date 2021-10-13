@@ -6,78 +6,57 @@
 core::list::list(const std::string &name) : element(name)
 {
     // Creates an empty vector for every sorting type
-    std::vector<element*> a;
+    element* a = new element(true, false);
+    a->set_next("alphabetical", new element(false, true));
     sorted["alphabetical"] = a;
 }
-core::list::list(const std::string &name, const std::vector<element*> &init_elements) : list(name) 
+/*core::list::list(const std::string &name, const std::vector<element*> &init_elements) : list(name) 
 {    
     this->elements = init_elements;
-}
+}*/
 
 void core::list::insert(const element &e)
 {
     element* to_e = new element(e.get_name());
 
-    elements.push_back(to_e);
-    name_to_element_index[to_e->get_name()] = elements.size() - 1;
-    
-    //std::cout << elements.back() << std::endl;
+    name_to_element[to_e->get_name()] = to_e;
 
     // For every sorting type in the program
-    for(std::map<std::string, std::vector<element*>>::iterator it = sorted.begin(); it != sorted.end(); it++) 
+    for(std::unordered_map<std::string, element*>::iterator it = sorted.begin(); it != sorted.end(); it++) 
     {
         // Get the type
         std::string compare_type = it->first;
 
-        int start = 0;
-        int end = it->second.size();
-        // Uses a binary search algorithm to find the position of the smallest element which is bigger than e
-        while(start != end)
+        element* cur = it->second;
+        // Uses iterates through the list until it finds the greatest element that's not bigger than the current element
+        while(cur->next(compare_type)->compare_to(e, compare_type) < 0)
         {
-            int mid = (start + end) / 2;
-            element* cur = it->second[mid];
-            if(cur->compare_to(e, compare_type) < 0)
-            {
-                start = mid + 1;
-            }
-            else if(cur->compare_to(e, compare_type) > 0)
-            {
-                end = mid;
-            }
+            cur = cur->next(compare_type);
         }
-        // Inserts e into the position we found; maintaining the vector's sorted ordering
-        it->second.insert(it->second.begin() + end, to_e);
-
-        //std::cout << it->second[end] << std::endl;
+        cur->set_next(compare_type, to_e);
     }
 
 }
 
 void core::list::remove(const std::string &name)
 {
-    int cur_index = name_to_element_index[name];
-    for (int i = name_to_element_index[name]; i < elements.size() - 1; i++)
+    element* to_delete = name_to_element[name];
+    name_to_element.erase(name);
+    for(std::unordered_map<std::string, element*>::iterator it = sorted.begin(); it != sorted.end(); it++)
     {
-        *elements[cur_index] = *elements[cur_index + 1];
+        std::string sorting_type = it->first;
+        to_delete->prev(sorting_type)->set_next(sorting_type, to_delete->next(sorting_type));
     }
-    std::cout << "SIZE: " << elements.size() << std::endl;
-    delete(elements.back());
-    elements.pop_back();
-    std::cout << "NEW SIZE: " << elements.size() << std::endl;
-
-    for(std::map<std::string, std::vector<element*>>::iterator it = sorted.begin(); it != sorted.end(); it++)
-    {
-        //delete(it->second.back());
-        (it->second).pop_back();
-    }
+    delete(to_delete);
+    to_delete = NULL;
 }
 
-std::vector<core::element*> core::list::get_elements() const
+core::element core::list::get_element(const std::string &name)
 {
-    return elements;
+    return *name_to_element[name];
 }
 
-std::vector<core::element*> core::list::get_sorted(const std::string &type) const
+core::element core::list::get_first(const std::string &type)
 {
-    return sorted.at(type);
+    return *sorted[type]->next(type);
 }
