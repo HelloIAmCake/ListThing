@@ -16,21 +16,21 @@ int main()
         main_list.insert(waa2);
         main_list.insert(waa3);
         main_list.insert(waa4);
-       core:: element* cur = main_list.get_first("alphabetical");
-        while (cur->next("alphabetical") != NULL)
+       core:: element cur = main_list.get_first("alphabetical");
+        while (cur.next("alphabetical") != NULL)
         {
-            std::cout << cur->get_name() << std::endl;
-            cur = cur->next("alphabetical");
+            std::cout << cur.get_name() << std::endl;
+            cur = *cur.next("alphabetical");
         }
 
         std::cout << std::endl;
-        main_list.remove("Wow");
+        main_list.remove("Joseph1");
 
-        core::element* cur2 = main_list.get_first("alphabetical");
-        while (cur2->next("alphabetical") != NULL)
+        core::element cur2 = main_list.get_first("alphabetical");
+        while (cur2.next("alphabetical") != NULL)
         {
-            std::cout << cur2->get_name() << std::endl;
-            cur2 = cur2->next("alphabetical");
+            std::cout << cur2.get_name() << std::endl;
+            cur2 = *cur2.next("alphabetical");
         }
         
         return 0;

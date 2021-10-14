@@ -27,7 +27,7 @@ void core::list::insert(const element &e)
         std::string compare_type = it->first;
 
         element* cur = it->second;
-        // Uses iterates through the list until it finds the greatest element that's not bigger than the current element
+        // Iterates through the list until it finds the greatest element that's not bigger than the current element
         while(cur->next(compare_type)->compare_to(e, compare_type) < 0)
         {
             cur = cur->next(compare_type);
@@ -57,7 +57,7 @@ core::element core::list::get_element(const std::string &name)
     return *name_to_element[name];
 }
 
-core::element* core::list::get_first(const std::string &type)
+core::element core::list::get_first(const std::string &type)
 {
-    return sorted[type]->next(type);
+    return *sorted[type]->next(type);
 }

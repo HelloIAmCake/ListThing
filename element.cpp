@@ -35,9 +35,9 @@ core::element* core::element::prev(std::string sorting_type)
 
 int core::element::compare_to(element e, std::string compare_type)
 {
-    if(this->is_head)
+    if(this->is_head || e.is_tail)
         return -1;
-    if(this->is_tail)
+    if(this->is_tail || e.is_head)
         return 1;
     //TODO: ADD MORE SORTING TYPE DEFINITIONS
     // Compares elements based on alphabetical order
