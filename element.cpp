@@ -20,17 +20,7 @@ std::string core::element::get_name() const
 
 void core::element::set_next(std::string sorting_type, element* e)
 {
-    if(e->is_tail)
-    {
-        next_map[sorting_type] = e;
-        e->prev_map[sorting_type] = this;
-        return;
-    }
-    element* old_next = next(sorting_type);
     next_map[sorting_type] = e;
-    e->next_map[sorting_type] = old_next;
-
-    old_next->prev_map[sorting_type] = e;
     e->prev_map[sorting_type] = this;
 }
 

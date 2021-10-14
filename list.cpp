@@ -1,7 +1,6 @@
 // Written by Dylan Hansen and Emily Roberts
 
 #include "list.h"
-#include <iostream> //TODO REMOVE
 
 core::list::list(const std::string &name) : element(name)
 {
@@ -33,7 +32,9 @@ void core::list::insert(const element &e)
         {
             cur = cur->next(compare_type);
         }
+        element* old_next = cur->next(compare_type);
         cur->set_next(compare_type, to_e);
+        to_e->set_next(compare_type, old_next);
     }
 
 }
@@ -56,7 +57,7 @@ core::element core::list::get_element(const std::string &name)
     return *name_to_element[name];
 }
 
-core::element core::list::get_first(const std::string &type)
+core::element* core::list::get_first(const std::string &type)
 {
-    return *sorted[type]->next(type);
+    return sorted[type]->next(type);
 }
