@@ -7,6 +7,8 @@
 #define EL_H
 
 #include <string>
+#include <unordered_map> 
+#include <iostream> //TODO REMOVE
 
 namespace core
 {
@@ -14,9 +16,19 @@ namespace core
     {
         private:
             std::string name;
+            std::unordered_map<std::string, element*> prev_map;
+            std::unordered_map<std::string, element*> next_map;
+            bool is_head;
+            bool is_tail;
+            
         public:
+            element(bool is_head, bool is_tail);
             element(const std::string &name);
             std::string get_name() const;
+
+            void set_next(std::string sorting_type, element* e);
+            element* next(std::string sorting_type);
+            element* prev(std::string sorting_type);
 
             int compare_to(element e, std::string compare_type); // Compares 2 elements based on the specified compare type.
             // If the returned val < 0, then this < e. If returned val > 0, then this > e. If returned 0, this = e.
